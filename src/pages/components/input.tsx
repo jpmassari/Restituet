@@ -7,7 +7,7 @@ interface AnswerProps {
   answer: string,
 }
 
-export const InputAnswer: React.FC<AnswerProps> = ({ label, thinker, answer}) => {
+const InputAnswer: React.FC<AnswerProps> = ({ label, thinker, answer}) => {
   // Declare a state variable for the current index and a function to update it
   const [ index, setIndex ] = useState(0);
   const colorRef = useRef<HTMLInputElement>(null)
@@ -61,3 +61,5 @@ export const InputAnswer: React.FC<AnswerProps> = ({ label, thinker, answer}) =>
     </div>
   )
 }
+
+export default InputAnswer
