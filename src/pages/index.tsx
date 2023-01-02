@@ -22,7 +22,7 @@ const seaWeed = Seaweed_Script({
 
 const Home: NextPage = () => {
   const [ thinkers, setThinkers ] = useState({ middleAge: "São Tomas de aquino", modernAge: "Freud" })
-  const [ answers, setAnswers ] = useState({ middleAge:"", modernAge:""})
+  const [ answers, setAnswers ] = useState({ middleAge:"", modernAge:"" })
   const [ input, setInput ] = useState({
     value: '',
     count: 0
@@ -42,14 +42,14 @@ const Home: NextPage = () => {
       console.log("context: ", context)
 
       if(data[0] == undefined || data[1] == undefined) return "O Bot não soube responder"
-      setAnswers({ ...answers, middleAge: data[0], modernAge: data[1] });
+      setAnswers({ middleAge: data[0], modernAge: data[1] });
     },
   })
   return (
     <>
       <Head>
         <title>Restituet</title>
-        <meta name="description" content="Middle Age vs Modern Age" />
+        <meta name="description" content="Middle age vs Modern Age - compare for best advices" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <section className="bg-black">
@@ -67,6 +67,7 @@ const Home: NextPage = () => {
               onSubmit={(event) => {
               event.preventDefault();
               mutation.mutate({ question: input.value, thinkers: thinkers })
+              setAnswers({ middleAge: '', modernAge: '' });
             }}>
               <input
                 className='py-2 px-9 w-full shadow-xl'    
