@@ -8,18 +8,18 @@ interface AnswerProps {
 }
 
 export const InputAnswer: React.FC<AnswerProps> = ({ label, thinker, answer}) => {
-  // Declare a state variable for the current index and a function to update it
   const [ index, setIndex ] = useState(0);
-  const colorRef = useRef<HTMLInputElement>(null)
-
-  // Declare a state variable for the input value and a function to update it
   const [inputValue, setInputValue] = useState('');
+  const colorRef = useRef<HTMLInputElement>(null);
+
   const noise2D = createNoise2D();
+
   useEffect(() => {
+    console.log("answer.length: ",answer.length)
     if (index < answer.length) {
       setInputValue(inputValue + answer[index]);
-      //const delay = 10 + Math.sin(index / 10) * 100;
 
+      //const delay = 10 + Math.sin(index / 10) * 100;
       // Generate a Perlin noise value between -1 and 1
       const noiseValue = noise2D(index / 10, 0);
       // Map the Perlin noise value to a delay time between 50 and 150
@@ -28,11 +28,19 @@ export const InputAnswer: React.FC<AnswerProps> = ({ label, thinker, answer}) =>
       setTimeout(() => {
         setIndex(index + 1);
       }, delay);
-    }}, [answer, index])
+    }
+    if(answer.length == 0) {
+      console.log("TO AQUI, ENTREI NO ZERO")
+      console.log("index size: ", index)
+      setInputValue('')
+      setIndex(0)
+    }
+  }, [answer, index])
 
-
+  //TO DO: a cor vai ser atualizada toda vez que preenchermos o formulário
   useEffect(() => {
     if(!colorRef.current) return
+    if(colorRef.current.style.background) return
     colorRef.current.style.backgroundColor = '#9FE8FF'
     if(label == "Modern age thinkers") {
       colorRef.current.style.backgroundColor = '#D5FF9F';
@@ -57,7 +65,6 @@ export const InputAnswer: React.FC<AnswerProps> = ({ label, thinker, answer}) =>
         <div className='flex rounded-md min-h-[36px] sm:max-w-sm md:max-w-md whitespace-normal py-2 px-3 shadow-xl opacity-80 bg-white item-start'> {/* flex e h-auto */}
           <p>{inputValue}</p>
         </div>
-     
     </div>
   )
 }
