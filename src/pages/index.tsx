@@ -1,13 +1,12 @@
 import { type NextPage } from "next";
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Head from "next/head";
 import { Poppins, Seaweed_Script } from "@next/font/google"
 import Image from 'next/image'
-import background from '../public/background.png'
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import { trpc } from "../utils/trpc";
-import { InputAnswer } from './components/input'
+import InputAnswer from './components/input'
 
 const poppins = Poppins({
   weight: ['400', '600'],

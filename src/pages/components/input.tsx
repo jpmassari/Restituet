@@ -7,7 +7,7 @@ interface AnswerProps {
   answer: string,
 }
 
-export const InputAnswer: React.FC<AnswerProps> = ({ label, thinker, answer}) => {
+export const InputAnswer: React.FC<AnswerProps> = ({ label, thinker, answer }) => {
   const [ index, setIndex ] = useState(0);
   const [inputValue, setInputValue] = useState('');
   const colorRef = useRef<HTMLInputElement>(null);
@@ -18,11 +18,8 @@ export const InputAnswer: React.FC<AnswerProps> = ({ label, thinker, answer}) =>
     console.log("answer.length: ",answer.length)
     if (index < answer.length) {
       setInputValue(inputValue + answer[index]);
-
-      //const delay = 10 + Math.sin(index / 10) * 100;
-      // Generate a Perlin noise value between -1 and 1
+      
       const noiseValue = noise2D(index / 10, 0);
-      // Map the Perlin noise value to a delay time between 50 and 150
       const delay = 10 + (noiseValue + 1) * 50;
       
       setTimeout(() => {
@@ -30,8 +27,6 @@ export const InputAnswer: React.FC<AnswerProps> = ({ label, thinker, answer}) =>
       }, delay);
     }
     if(answer.length == 0) {
-      console.log("TO AQUI, ENTREI NO ZERO")
-      console.log("index size: ", index)
       setInputValue('')
       setIndex(0)
     }
@@ -68,3 +63,5 @@ export const InputAnswer: React.FC<AnswerProps> = ({ label, thinker, answer}) =>
     </div>
   )
 }
+
+export default InputAnswer
