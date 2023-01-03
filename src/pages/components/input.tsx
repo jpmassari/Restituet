@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { createNoise2D } from 'simplex-noise';
 
-
 interface AnswerProps {
   label: string,
   era: string,
@@ -29,6 +28,7 @@ export const InputAnswer: React.FC<AnswerProps> = ({
   const noise2D = createNoise2D();
 
   useEffect(() => {
+    console.log("answer.length: ",answer.length)
     if (index < answer.length) {
       setInputValue(inputValue + answer[index]);
 
@@ -45,9 +45,11 @@ export const InputAnswer: React.FC<AnswerProps> = ({
     }
   }, [answer, index])
 
+  //TO DO: a cor vai ser atualizada toda vez que preenchermos o formulário
   useEffect(() => {
     if(!colorRef.current) return;
     if(colorRef.current.style.background) return;
+   
     setDisplayedThinker(initialThinker as string);
     colorRef.current.style.backgroundColor = '#9FE8FF';
     if(era == "modern") {
