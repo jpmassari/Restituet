@@ -37,10 +37,6 @@ const Home: NextPage = () => {
   
   const mutation = trpc.example.getAll.useMutation({
     onSuccess: (data, variables, context) => {
-      console.log("data: ", data)
-      console.log("variables: ", variables)
-      console.log("context: ", context)
-
       if(data[0] == undefined || data[1] == undefined) return "O Bot não soube responder"
       setAnswers({ middleAge: data[0], modernAge: data[1] });
     },
@@ -80,8 +76,8 @@ const Home: NextPage = () => {
             </form>
           </div>
           <div className="flex flex-row w-full justify-between">
-            <InputAnswer label="Middle age thinkers" thinker={thinkers.middleAge} answer={answers.middleAge}/>
-            <InputAnswer label="Modern age thinkers" thinker={thinkers.modernAge} answer={answers.modernAge}/>      
+            <InputAnswer label="Middle age thinkers" era="middle" thinker={(value: string) => setThinkers({ ...thinkers, middleAge: value })} answer={answers.middleAge}/>
+            <InputAnswer label="Modern age thinkers" era="modern" thinker={(value: string) => setThinkers({ ...thinkers, modernAge: value })} answer={answers.modernAge}/>      
           </div>
           {/*   
           <div className="flex flex-col items-center gap-2">
