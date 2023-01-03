@@ -7,8 +7,5 @@
   "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
   "rules": {
     "@typescript-eslint/consistent-type-imports": "warn",
-    "no-unnecessary-type-assertion": true,
-    "no-object-literal-type-assertion": true,
-    "no-angle-bracket-type-assertion": true
   }
 }
