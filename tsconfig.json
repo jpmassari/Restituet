@@ -14,7 +14,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
   },
   "include": ["next-env.d.ts", "module.d.ts","**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs", ".d.ts"],
   "exclude": ["node_modules"]

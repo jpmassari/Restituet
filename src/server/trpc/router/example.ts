@@ -6,6 +6,7 @@ export const exampleRouter = router({
   getAll: publicProcedure
   .input(z.object({ question: z.string(), thinkers: z.object({ middleAge: z.string(), modernAge: z.string() })}))
   .mutation(async ({ input, ctx }) => {
+    console.log(input.thinkers)
     const middleAgeAnswer = await ctx.openAIApi.createCompletion({
       model: "text-davinci-003",
       prompt: "Escreva como " + input.thinkers.middleAge +" um conselho sobre  " + input.question,
