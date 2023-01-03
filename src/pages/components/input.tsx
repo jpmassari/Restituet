@@ -8,7 +8,7 @@ interface AnswerProps {
   answer: string,
 }
 
-export const InputAnswer: React.FC<AnswerProps> = ({
+const InputAnswer: React.FC<AnswerProps> = ({
   label,
   era,
   thinker = (value) => value,
@@ -112,3 +112,5 @@ export const InputAnswer: React.FC<AnswerProps> = ({
     </div>
   )
 }
+
+export default InputAnswer
