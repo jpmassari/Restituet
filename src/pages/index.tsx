@@ -21,7 +21,11 @@ const seaWeed = Seaweed_Script({
   subsets: ['latin']
 })
 
-const Home: NextPage = () => {
+interface Props {
+  serverRenderedButton: JSX.Element;
+}
+
+const Home: NextPage<Props> = ({ serverRenderedButton }) => {
   const [ thinkers, setThinkers ] = useState({ middleAge: "São Tomas de aquino", modernAge: "Freud" })
   const [ answers, setAnswers ] = useState({ middleAge:"", modernAge:"" })
   const [ input, setInput ] = useState({
@@ -78,7 +82,12 @@ const Home: NextPage = () => {
                 }}
               />
               <label className='text-white font-bold'>Limit {input.count}/75</label>
-              {isQuestionReady && <Button isReady={isQuestionReady} />}
+              {isQuestionReady ? (
+                <Button isReady={isQuestionReady} />
+              ) : (
+                serverRenderedButton
+              )}
+              
             </form>
           </div>
           <div className="flex flex-row w-full justify-between">
@@ -107,6 +116,11 @@ const Home: NextPage = () => {
     </>
   );
 };
+
+Home.getInitialProps = async (ctx) => {
+  const serverRenderedButton = <Button isReady={{ middle: true, modern: true }}/> 
+  return { serverRenderedButton }
+}
 
 export default Home;
 
