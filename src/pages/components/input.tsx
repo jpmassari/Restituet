@@ -39,7 +39,8 @@ const InputAnswer: React.FC<AnswerProps> = ({
         setIndex(index + 1);
       }, delay);
     }
-    if(index == answer.length && answer.length > 0) {
+    if(index == answer.length) {
+      console.log("should not be here")
       isQuestionReady(true)
     }
     if(answer.length == 0) {

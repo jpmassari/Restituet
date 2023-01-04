@@ -35,7 +35,6 @@ const Home: NextPage = () => {
 
   const mutation = trpc.example.getAll.useMutation({
     onMutate: () => {
-      console.log(isQuestionReady.middle)
       setIsQuestionReady({ middle: false, modern: false });
       setAnswers({ middleAge: '', modernAge: '' });
     },
@@ -79,7 +78,7 @@ const Home: NextPage = () => {
                 }}
               />
               <label className='text-white font-bold'>Limit {input.count}/75</label>
-              <Button isReady={{ ...isQuestionReady }}/>
+              <Button isReady={isQuestionReady || { middle: true, modern: true }} />
             </form>
           </div>
           <div className="flex flex-row w-full justify-between">
@@ -88,14 +87,14 @@ const Home: NextPage = () => {
               era="middle" 
               thinker={(value: string) => setThinkers({ ...thinkers, middleAge: value })} 
               answer={answers.middleAge} 
-              isQuestionReady={(value: boolean) => setIsQuestionReady({...isQuestionReady, middle: value})}
+              isQuestionReady={(value: boolean) => setIsQuestionReady({ ...isQuestionReady, middle: value })}
             />
             <InputAnswer 
               label="Modern age thinkers" 
               era="modern" 
               thinker={(value: string) => setThinkers({ ...thinkers, modernAge: value })} 
               answer={answers.modernAge} 
-              isQuestionReady={(value: boolean) => setIsQuestionReady({...isQuestionReady, modern: value})}
+              isQuestionReady={(value: boolean) => setIsQuestionReady({ ...isQuestionReady, modern: value })}
             />      
           </div>
           {/*   
