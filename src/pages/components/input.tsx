@@ -20,7 +20,6 @@ const InputAnswer: React.FC<AnswerProps> = ({
     middleAge: [ "São Tomas de aquino", "Platão", "Marco Aurélio" ],
     modernAge: [ "Freud", "Robespierre", "Cromwell" ]
   }
-  console.log("input")
   const initialThinker = typeof thinker === 'string' && thinker;
   const [ displayedThinker, setDisplayedThinker ] = useState('');
   const [ index, setIndex ] = useState(0);

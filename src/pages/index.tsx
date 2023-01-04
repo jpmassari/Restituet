@@ -67,7 +67,6 @@ const Home: NextPage = () => {
               onSubmit={(event) => {
               event.preventDefault();
               mutation.mutate({ question: input.value, thinkers: thinkers })
-              console.log("submited")
             }}>
               <input
                 className='py-2 px-9 w-full shadow-xl'    
@@ -80,7 +79,7 @@ const Home: NextPage = () => {
                 }}
               />
               <label className='text-white font-bold'>Limit {input.count}/75</label>
-              <Button isReady={isQuestionReady}/>
+              <Button isReady={{ ...isQuestionReady }}/>
             </form>
           </div>
           <div className="flex flex-row w-full justify-between">
