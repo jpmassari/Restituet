@@ -8,6 +8,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { trpc } from "../utils/trpc";
 import InputAnswer from './components/input'
 import Button from './components/button'
+import Questioninput from "./components/questionInput";
 
 const poppins = Poppins({
   weight: ['400', '600'],
@@ -24,10 +25,7 @@ const seaWeed = Seaweed_Script({
 const Home: NextPage= () => {
   const [ thinkers, setThinkers ] = useState({ middleAge: "São Tomas de aquino", modernAge: "Freud" })
   const [ answers, setAnswers ] = useState({ middleAge:"", modernAge:"" })
-  const [ input, setInput ] = useState({
-    value: '',
-    count: 0
-  });
+  const [ input, setInput ] = useState('')
   const [ isQuestionReady, setIsQuestionReady ] = useState({
     middle: true,
     modern: true
@@ -65,19 +63,9 @@ const Home: NextPage= () => {
             <form
               onSubmit={(event) => {
               event.preventDefault();
-              mutation.mutate({ question: input.value, thinkers: thinkers })
+              mutation.mutate({ question: input, thinkers: thinkers })
             }}>
-              <input
-                className='py-2 px-9 w-full shadow-xl'    
-                type="text"
-                value={input.value}
-                placeholder="How should I deal with ambiguos problems?"
-                onChange={(event) => {
-                  const value = event.target.value;
-                  value.length <= 75 && setInput({ ...input, value: value, count: value.length })
-                }}
-              />
-              <label className='text-white font-bold'>Limit {input.count}/75</label>
+              <Questioninput input={(value) => setInput(value)}/>
               <Button middle={isQuestionReady.middle} modern={isQuestionReady.modern} /> {/* perguntar Duxo(mentor) pq é preciso passar a propriedade do objeto. caso contrario undefined */}
             </form>
           </div>
