@@ -78,7 +78,7 @@ const Home: NextPage = () => {
                 }}
               />
               <label className='text-white font-bold'>Limit {input.count}/75</label>
-              <Button isReady={isQuestionReady || { middle: true, modern: true }} />
+              {isQuestionReady && <Button isReady={isQuestionReady} />}
             </form>
           </div>
           <div className="flex flex-row w-full justify-between">
