@@ -33,16 +33,11 @@ const Home: NextPage = () => {
     modern: true
   })
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    if (value.length <= 75) {
-      setInput({...input, value: value, count: value.length });
-    }
-  };
-  
   const mutation = trpc.example.getAll.useMutation({
     onMutate: () => {
-      setIsQuestionReady({ middle: false, modern: false })
+      console.log(isQuestionReady.middle)
+      setIsQuestionReady({ middle: false, modern: false });
+      setAnswers({ middleAge: '', modernAge: '' });
     },
     onSuccess: (data, variables, context) => {
       if(data[0] == undefined || data[1] == undefined) return "O Bot não soube responder"
@@ -72,15 +67,17 @@ const Home: NextPage = () => {
               onSubmit={(event) => {
               event.preventDefault();
               mutation.mutate({ question: input.value, thinkers: thinkers })
-              setAnswers({ middleAge: '', modernAge: '' });
               console.log("submited")
             }}>
               <input
                 className='py-2 px-9 w-full shadow-xl'    
                 type="text"
                 value={input.value}
-                onChange={handleChange}
                 placeholder="How should I deal with ambiguos problems?"
+                onChange={(event) => {
+                  const value = event.target.value;
+                  value.length <= 75 && setInput({...input, value: value, count: value.length })
+                }}
               />
               <label className='text-white font-bold'>Limit {input.count}/75</label>
               <Button isReady={isQuestionReady}/>

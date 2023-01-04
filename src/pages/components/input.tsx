@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { createNoise2D } from 'simplex-noise';
 
 interface AnswerProps {
@@ -20,7 +20,7 @@ const InputAnswer: React.FC<AnswerProps> = ({
     middleAge: [ "São Tomas de aquino", "Platão", "Marco Aurélio" ],
     modernAge: [ "Freud", "Robespierre", "Cromwell" ]
   }
-
+  console.log("input")
   const initialThinker = typeof thinker === 'string' && thinker;
   const [ displayedThinker, setDisplayedThinker ] = useState('');
   const [ index, setIndex ] = useState(0);
@@ -40,7 +40,7 @@ const InputAnswer: React.FC<AnswerProps> = ({
         setIndex(index + 1);
       }, delay);
     }
-    if(index == answer.length) {
+    if(index == answer.length && answer.length > 0) {
       isQuestionReady(true)
     }
     if(answer.length == 0) {
