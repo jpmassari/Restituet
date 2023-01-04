@@ -1,13 +1,13 @@
-type Ready = {
+interface Ready {
   ready: {
     middle: boolean,
     modern: boolean
   }
 }
 
-export const Button = (ready: Ready) => (
+const Button: React.FC<Ready> = (props) => (
   <div className="h-8 w-28 m-auto">
-    {ready.ready.middle && ready.ready.modern ? (
+    {props.ready.middle && props.ready.modern ? (
       <button
         className="w-full h-full rounded-sm bg-[#6BA87C] shadow hover:bg-[#527F5E] duration-200 ease-in-out text-white"
       >
@@ -23,3 +23,5 @@ export const Button = (ready: Ready) => (
     )}
   </div>
 )
+
+export default Button

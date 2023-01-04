@@ -7,7 +7,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 import { trpc } from "../utils/trpc";
 import InputAnswer from './components/input'
-import { Button } from './components/button'
+import Button from './components/button'
 
 const poppins = Poppins({
   weight: ['400', '600'],
