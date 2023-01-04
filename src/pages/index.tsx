@@ -83,7 +83,7 @@ const Home: NextPage = () => {
                 placeholder="How should I deal with ambiguos problems?"
               />
               <label className='text-white font-bold'>Limit {input.count}/75</label>
-              <Button ready={isQuestionReady}/>
+              <Button isReady={isQuestionReady}/>
             </form>
           </div>
           <div className="flex flex-row w-full justify-between">

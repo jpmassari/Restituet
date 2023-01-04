@@ -1,13 +1,13 @@
 interface Ready {
-  ready: {
+  isReady: {
     middle: boolean,
     modern: boolean
   }
 }
 
-const Button: React.FC<Ready> = (props) => (
+const Button: React.FC<Ready> = ({isReady}) => (
   <div className="h-8 w-28 m-auto">
-    {props.ready.middle && props.ready.modern ? (
+    {isReady.middle && isReady.modern ? (
       <button
         className="w-full h-full rounded-sm bg-[#6BA87C] shadow hover:bg-[#527F5E] duration-200 ease-in-out text-white"
       >
