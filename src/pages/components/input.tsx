@@ -6,13 +6,15 @@ interface AnswerProps {
   era: string,
   thinker: string | ((value: string) => void),
   answer: string,
+  isQuestionReady: (value: boolean) => void
 }
 
 const InputAnswer: React.FC<AnswerProps> = ({
   label,
   era,
-  thinker = (value) => value,
+  thinker = () => null,
   answer,
+  isQuestionReady = () => null
 }) => {
   const THINKERS = {
     middleAge: [ "São Tomas de aquino", "Platão", "Marco Aurélio" ],
@@ -28,7 +30,6 @@ const InputAnswer: React.FC<AnswerProps> = ({
   const noise2D = createNoise2D();
 
   useEffect(() => {
-    console.log("answer.length: ",answer.length)
     if (index < answer.length) {
       setInputValue(inputValue + answer[index]);
 
@@ -38,6 +39,9 @@ const InputAnswer: React.FC<AnswerProps> = ({
       setTimeout(() => {
         setIndex(index + 1);
       }, delay);
+    }
+    if(index == answer.length) {
+      isQuestionReady(true)
     }
     if(answer.length == 0) {
       setInputValue('');
@@ -51,9 +55,9 @@ const InputAnswer: React.FC<AnswerProps> = ({
     if(colorRef.current.style.background) return;
    
     setDisplayedThinker(initialThinker as string);
-    colorRef.current.style.backgroundColor = '#9FE8FF';
+    colorRef.current.style.backgroundColor = '#D5FF9F';
     if(era == "modern") {
-      colorRef.current.style.backgroundColor = '#D5FF9F';
+      colorRef.current.style.backgroundColor = '#9FE8FF';
     }
   }, [])
 
@@ -64,7 +68,7 @@ const InputAnswer: React.FC<AnswerProps> = ({
         <p className='text-white text-2xl'>How</p>
         <select
           ref={colorRef}
-          className={'pl-3 pr-4 mx-4 h-8 w-44 min-w-0 shadow-xl opacity-80 text-xl'}
+          className={'pl-3 pr-4 mx-4 h-7 w-44 min-w-0 shadow-xl opacity-80 text-xl'}
           name="thinker"
           value={displayedThinker}
           onChange={(event) => {
@@ -86,7 +90,7 @@ const InputAnswer: React.FC<AnswerProps> = ({
           >
             Select a thinker
           </option>
-          {label == "Modern age thinkers" ? (
+          {era == "modern" ? (
             THINKERS.modernAge.map((thinker,i) => (
               <option 
                 key={i}

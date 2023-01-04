@@ -7,6 +7,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 import { trpc } from "../utils/trpc";
 import InputAnswer from './components/input'
+import { Button } from './components/button'
 
 const poppins = Poppins({
   weight: ['400', '600'],
@@ -27,6 +28,10 @@ const Home: NextPage = () => {
     value: '',
     count: 0
   });
+  const [ isQuestionReady, setIsQuestionReady ] = useState({
+    middle: true,
+    modern: true
+  })
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -36,11 +41,15 @@ const Home: NextPage = () => {
   };
   
   const mutation = trpc.example.getAll.useMutation({
+    onMutate: () => {
+      setIsQuestionReady({ middle: false, modern: false })
+    },
     onSuccess: (data, variables, context) => {
       if(data[0] == undefined || data[1] == undefined) return "O Bot não soube responder"
       setAnswers({ middleAge: data[0], modernAge: data[1] });
     },
   })
+
   return (
     <>
       <Head>
@@ -64,6 +73,7 @@ const Home: NextPage = () => {
               event.preventDefault();
               mutation.mutate({ question: input.value, thinkers: thinkers })
               setAnswers({ middleAge: '', modernAge: '' });
+              console.log("submited")
             }}>
               <input
                 className='py-2 px-9 w-full shadow-xl'    
@@ -73,11 +83,24 @@ const Home: NextPage = () => {
                 placeholder="How should I deal with ambiguos problems?"
               />
               <label className='text-white font-bold'>Limit {input.count}/75</label>
+              <Button ready={isQuestionReady}/>
             </form>
           </div>
           <div className="flex flex-row w-full justify-between">
-            <InputAnswer label="Middle age thinkers" era="middle" thinker={(value: string) => setThinkers({ ...thinkers, middleAge: value })} answer={answers.middleAge}/>
-            <InputAnswer label="Modern age thinkers" era="modern" thinker={(value: string) => setThinkers({ ...thinkers, modernAge: value })} answer={answers.modernAge}/>      
+            <InputAnswer
+              label="Middle age thinkers"
+              era="middle" 
+              thinker={(value: string) => setThinkers({ ...thinkers, middleAge: value })} 
+              answer={answers.middleAge} 
+              isQuestionReady={(value: boolean) => setIsQuestionReady({...isQuestionReady, middle: value})}
+            />
+            <InputAnswer 
+              label="Modern age thinkers" 
+              era="modern" 
+              thinker={(value: string) => setThinkers({ ...thinkers, modernAge: value })} 
+              answer={answers.modernAge} 
+              isQuestionReady={(value: boolean) => setIsQuestionReady({...isQuestionReady, modern: value})}
+            />      
           </div>
           {/*   
           <div className="flex flex-col items-center gap-2">
