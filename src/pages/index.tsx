@@ -78,7 +78,7 @@ const Home: NextPage= () => {
                 }}
               />
               <label className='text-white font-bold'>Limit {input.count}/75</label>
-              <Button middle={isQuestionReady.middle} modern={isQuestionReady.modern} />
+              <Button middle={isQuestionReady.middle} modern={isQuestionReady.modern} /> {/* perguntar Duxo(mentor) pq é preciso passar a propriedade do objeto. caso contrario undefined */}
             </form>
           </div>
           <div className="flex flex-row w-full justify-between">
