@@ -5,7 +5,7 @@ interface Ready {
   }
 }
 
-const Button: React.FC<Ready> = ({isReady}) => (
+const Button: React.FC<Ready> = ({ isReady }) => (
   <div className="h-8 w-28 m-auto">
     {isReady.middle && isReady.modern ? (
       <button

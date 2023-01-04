@@ -42,7 +42,7 @@ const Home: NextPage = () => {
   
   const mutation = trpc.example.getAll.useMutation({
     onMutate: () => {
-      setIsQuestionReady({ middle: false, modern: false })
+      setIsQuestionReady({ ...isQuestionReady, middle: false, modern: false })
     },
     onSuccess: (data, variables, context) => {
       if(data[0] == undefined || data[1] == undefined) return "O Bot não soube responder"
