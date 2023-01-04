@@ -21,11 +21,7 @@ const seaWeed = Seaweed_Script({
   subsets: ['latin']
 })
 
-interface Props {
-  serverRenderedButton: JSX.Element;
-}
-
-const Home: NextPage<Props> = ({ serverRenderedButton }) => {
+const Home: NextPage= () => {
   const [ thinkers, setThinkers ] = useState({ middleAge: "São Tomas de aquino", modernAge: "Freud" })
   const [ answers, setAnswers ] = useState({ middleAge:"", modernAge:"" })
   const [ input, setInput ] = useState({
@@ -78,16 +74,11 @@ const Home: NextPage<Props> = ({ serverRenderedButton }) => {
                 placeholder="How should I deal with ambiguos problems?"
                 onChange={(event) => {
                   const value = event.target.value;
-                  value.length <= 75 && setInput({...input, value: value, count: value.length })
+                  value.length <= 75 && setInput({ ...input, value: value, count: value.length })
                 }}
               />
               <label className='text-white font-bold'>Limit {input.count}/75</label>
-              {isQuestionReady ? (
-                <Button isReady={isQuestionReady} />
-              ) : (
-                serverRenderedButton
-              )}
-              
+              <Button middle={isQuestionReady.middle} modern={isQuestionReady.modern} />
             </form>
           </div>
           <div className="flex flex-row w-full justify-between">
@@ -117,10 +108,6 @@ const Home: NextPage<Props> = ({ serverRenderedButton }) => {
   );
 };
 
-Home.getInitialProps = async (ctx) => {
-  const serverRenderedButton = <Button isReady={{ middle: true, modern: true }}/> 
-  return { serverRenderedButton }
-}
 
 export default Home;
 

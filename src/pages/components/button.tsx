@@ -1,14 +1,12 @@
 import React from 'react'
 
-interface Ready {
-  isReady: {
+interface Props {
     middle: boolean,
     modern: boolean
-  }
 }
 
-const Button: React.FC<Ready> = ({ isReady }) => {
-  if(isReady.middle && isReady.modern) return <SubmitButton/>
+const Button: React.FC<Props> = ({ middle, modern }) => {
+  if(middle && modern) return <SubmitButton/>
   return <CancelButton />
 }
 
