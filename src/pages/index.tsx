@@ -1,47 +1,27 @@
 import { type NextPage } from "next";
-import { useState } from "react"
+import dynamic from 'next/dynamic'
 import Head from "next/head";
-import { Poppins, Seaweed_Script } from "@next/font/google"
-import Image from 'next/image'
 import { signIn, signOut, useSession } from "next-auth/react";
+import { Poppins, Seaweed_Script } from "@next/font/google"
 
 import { trpc } from "../utils/trpc";
-import InputAnswer from './components/input'
-import Button from './components/button'
-import Questioninput from "./components/questionInput";
+const DHome = dynamic(() => import('./desktop/DHome'))
 
-const poppins = Poppins({
+export const poppins = Poppins({
   weight: ['400', '600'],
   style: ['normal'],
   subsets: ['latin']
 })
 
-const seaWeed = Seaweed_Script({
+export const seaWeed = Seaweed_Script({
   weight: ['400'],
   style: ['normal'],
   subsets: ['latin']
 })
 
+
 const Home: NextPage= () => {
-  const [ thinkers, setThinkers ] = useState({ middleAge: "São Tomas de aquino", modernAge: "Freud" })
-  const [ answers, setAnswers ] = useState({ middleAge:"", modernAge:"" })
-  const [ input, setInput ] = useState('')
-  const [ isQuestionReady, setIsQuestionReady ] = useState({
-    middle: true,
-    modern: true
-  })
-
-  const mutation = trpc.example.getAll.useMutation({
-    onMutate: () => {
-      setIsQuestionReady({ middle: false, modern: false });
-      setAnswers({ middleAge: '', modernAge: '' });
-    },
-    onSuccess: (data, variables, context) => {
-      if(data[0] == undefined || data[1] == undefined) return "O Bot não soube responder"
-      setAnswers({ middleAge: data[0], modernAge: data[1] });
-    },
-  })
-
+  const getDevice = trpc.checkDevice.getDevice.useQuery();
   return (
     <>
       <Head>
@@ -49,53 +29,10 @@ const Home: NextPage= () => {
         <meta name="description" content="Middle age vs Modern Age - compare for best advices" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <section className="bg-black">
-        <Image
-          src="/background.png"
-          alt="A Beutiful landscape to inspire all sorts of philosophical questions"
-          fill={true}
-          className="object-fill z-0"
-          priority
-        /> 
-        <main className={`flex ${poppins.className} min-h-screen flex-col items-center justify-start pt-8 px-14 md:px-36 pb-11 z-99 relative`}> {/* fazer a observação sobre relative e posição do image  -> relative para a section parar section ser o bloco que esta contido*/}
-          <h1 className={`${seaWeed.className} text-6xl text-white mb-11 font-outline-2 select-none`}>RESTITUET</h1>
-          <div className='w-full pb-20 px-16'>
-            <form
-              onSubmit={(event) => {
-              event.preventDefault();
-              mutation.mutate({ question: input, thinkers: thinkers })
-            }}>
-              <Questioninput input={(value) => setInput(value)}/>
-              <Button middle={isQuestionReady.middle} modern={isQuestionReady.modern} /> {/* perguntar Duxo(mentor) pq é preciso passar a propriedade do objeto. caso contrario undefined */}
-            </form>
-          </div>
-          <div className="flex flex-row w-full justify-between">
-            <InputAnswer
-              label="Middle age thinkers"
-              era="middle" 
-              thinker={(value: string) => setThinkers({ ...thinkers, middleAge: value })} 
-              answer={answers.middleAge} 
-              isQuestionReady={(value: boolean) => setIsQuestionReady({ ...isQuestionReady, middle: value })}
-            />
-            <InputAnswer 
-              label="Modern age thinkers" 
-              era="modern" 
-              thinker={(value: string) => setThinkers({ ...thinkers, modernAge: value })} 
-              answer={answers.modernAge} 
-              isQuestionReady={(value: boolean) => setIsQuestionReady({ ...isQuestionReady, modern: value })}
-            />      
-          </div>
-          {/*   
-          <div className="flex flex-col items-center gap-2">
-            <AuthShowcase />
-          </div>
-          */}
-        </main>
-      </section> 
+      {getDevice.data && <DHome device={getDevice.data}/>}
     </>
   );
 };
-
 
 export default Home;
 
