@@ -1,13 +1,17 @@
 import { type inferAsyncReturnType } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { type Session } from "next-auth";
+import type Parser from 'ua-parser-js'; //vamos importar o type para diminuir pacotes extras que poderiam vir juntos
 
 import { getServerAuthSession } from "../common/get-server-auth-session";
+import { isMobile } from "../composition/landing/isMobile";
 import { prisma } from "../db/client";
 import { openAIApi } from "../api/openAIApi";
 
+
 type CreateContextOptions = {
   session: Session | null;
+  userAgent: Parser.IResult | null;
 };
 
 /** Use this helper for:
@@ -19,7 +23,8 @@ export const createContextInner = async (opts: CreateContextOptions) => {
   return {
     session: opts.session,
     prisma,
-    openAIApi
+    openAIApi,
+    userAgent: opts.userAgent
   };
 };
 
@@ -32,9 +37,10 @@ export const createContext = async (opts: CreateNextContextOptions) => {
 
   // Get the session from the server using the unstable_getServerSession wrapper function
   const session = await getServerAuthSession({ req, res });
-
+  const userAgent = await isMobile( req )
   return await createContextInner({
     session,
+    userAgent
   });
 };
 

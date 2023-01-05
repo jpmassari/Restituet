@@ -12,9 +12,9 @@ const Questioninput: React.FC<Input> = ({
     count: 0
   });
   return (
-    <>
+    <div className='flex flex-col'>
       <input
-        className='py-2 px-9 w-full shadow-xl'    
+        className='py-2 px-9 shadow-xl'    
         type="text"
         value={questionInput.value}
         placeholder="How should I deal with ambiguos problems?"
@@ -25,7 +25,7 @@ const Questioninput: React.FC<Input> = ({
         }}
       />
       <label className='text-white font-bold'>Limit {questionInput.count}/75</label>
-    </>
+    </div>
   )
 }
 

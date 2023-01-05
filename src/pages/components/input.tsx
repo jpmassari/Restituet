@@ -20,6 +20,7 @@ const InputAnswer: React.FC<AnswerProps> = ({
     middleAge: [ "São Tomas de aquino", "Platão", "Marco Aurélio" ],
     modernAge: [ "Freud", "Robespierre", "Cromwell" ]
   }
+  
   const initialThinker = typeof thinker === 'string' && thinker;
   const [ displayedThinker, setDisplayedThinker ] = useState('');
   const [ index, setIndex ] = useState(0);
@@ -62,9 +63,9 @@ const InputAnswer: React.FC<AnswerProps> = ({
 
   return (
     <div className="flex flex-col font-semibold">
-      <label className='text-4xl text-white pb-5'>{label}</label>
+      <label className='text-2xl md:text-4xl text-white pb-1 md:pb-5'>{label}</label>
       <div className='flex flex-row mb-3 items-center'>
-        <p className='text-white text-2xl'>How</p>
+        <p className='text-white text-xl md:text-2xl'>How</p>
         <select
           ref={colorRef}
           className={'pl-3 pr-4 mx-4 h-7 w-44 min-w-0 shadow-xl opacity-80 text-xl'}
@@ -90,7 +91,7 @@ const InputAnswer: React.FC<AnswerProps> = ({
             Select a thinker
           </option>
           {era == "modern" ? (
-            THINKERS.modernAge.map((thinker,i) => (
+            THINKERS.modernAge.map((thinker, i) => (
               <option 
                 key={i}
                 value={thinker}
@@ -98,7 +99,7 @@ const InputAnswer: React.FC<AnswerProps> = ({
                 {thinker}
               </option>
           ))) : (
-            THINKERS.middleAge.map((thinker,i) => (
+            THINKERS.middleAge.map((thinker, i) => (
               <option 
                 key={i}
                 value={thinker}
@@ -107,9 +108,9 @@ const InputAnswer: React.FC<AnswerProps> = ({
               </option>
           )))}
         </select>
-        <p className='text-white text-2xl'>would answer:</p>
+        <p className='text-white text-xl md:text-2xl'>would answer:</p>
       </div>
-        <div className='flex rounded-md min-h-[36px] sm:max-w-sm md:max-w-md whitespace-normal py-2 px-3 shadow-xl opacity-80 bg-white item-start'> {/* flex e h-auto */}
+        <div className='flex rounded-md min-h-[36px] max-w-md whitespace-normal py-2 px-3 shadow-xl opacity-80 bg-white item-start'> {/* flex e h-auto */}
           <p>{inputValue}</p>
         </div>
     </div>
