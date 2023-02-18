@@ -19,6 +19,7 @@ const DHome: React.FC<Device> = ({ device }) => {
     middle: true,
     modern: true
   })
+  
   const mutation = trpc.example.getAll.useMutation({
     onMutate: () => {
       setIsQuestionReady({ middle: false, modern: false });
@@ -29,13 +30,13 @@ const DHome: React.FC<Device> = ({ device }) => {
       setAnswers({ middleAge: data[0], modernAge: data[1] });
     },
   })
+
   return (
     <>
       <Image
         src="/background.png"
         alt="A Beutiful landscape to inspire all sorts of philosophical questions"
         fill={true}
-        sizes="100vw"
         priority
       /> 
       <section className="bg-transparent pt-8 px-14 md:px-36 relative">
