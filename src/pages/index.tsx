@@ -5,7 +5,9 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { Poppins, Seaweed_Script } from "@next/font/google"
 
 import { trpc } from "../utils/trpc";
+
 const DHome = dynamic(() => import('./desktop/DHome'))
+const MHome = dynamic(() => import('./mobile/MHome'))
 
 export const poppins = Poppins({
   weight: ['400', '600'],
@@ -19,9 +21,10 @@ export const seaWeed = Seaweed_Script({
   subsets: ['latin']
 })
 
-
 const Home: NextPage= () => {
   const getDevice = trpc.checkDevice.getDevice.useQuery();
+  
+  if(!getDevice.data) return <></>
   return (
     <>
       <Head>
@@ -29,7 +32,7 @@ const Home: NextPage= () => {
         <meta name="description" content="Middle age vs Modern Age - compare for best advices" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {getDevice.data && <DHome device={getDevice.data}/>}
+      {getDevice.data.device.type === 'mobile' ? <MHome device={getDevice.data} /> : <DHome device={getDevice.data} />}
     </>
   );
 };
@@ -38,7 +41,6 @@ export default Home;
 
 const AuthShowcase: React.FC = () => {
   const { data: sessionData } = useSession();
-
   const { data: secretMessage } = trpc.auth.getSecretMessage.useQuery(
     undefined, // no input
     { enabled: sessionData?.user !== undefined },
